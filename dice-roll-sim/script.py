@@ -12,14 +12,11 @@ class Dice:
 def simRoll(rolls, dice):
     total = 0
 
-    for roll in range(rolls):
-        rollValue = dice.roll()
+    for r in range(rolls):
+        roll = dice.roll()
+        print(roll, end=' ')
 
-        print('You rolled a {0} on roll number {1}'.format(
-            rollValue, roll + 1))
-
-        total += rollValue
-
+        total += roll
     return total
 
 
@@ -35,7 +32,8 @@ def simRollFromInput(text):
 def parseInput(f):
     file = open(f, 'r')
     for line in file:
-        print('Total value: {}\n'.format(simRollFromInput(line)))
+        print(line, end='')
+        print(f'\n= {simRollFromInput(line)}\n')
 
 
 parseInput('input.txt')
