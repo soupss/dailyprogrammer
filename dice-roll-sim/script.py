@@ -12,7 +12,7 @@ class Dice:
 def simRoll(rolls, dice):
     total = 0
 
-    for r in range(rolls):
+    for _ in range(rolls):
         roll = dice.roll()
         print(roll, end=' ')
 
