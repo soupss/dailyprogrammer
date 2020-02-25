@@ -1,5 +1,24 @@
 from random import randrange
 
+# https://en.wikipedia.org/wiki/ANSI_escape_code
+pre = '\033['
+class txt:
+    end = pre + '0m'
+    #effects
+    bold = pre + '1m'
+    italic = pre + '3m'
+    underline = pre + '4m'
+    blink = pre + '6m'
+    negative = pre + '7m'
+    
+    #colors
+    white = pre + '107m'
+    red = pre + '31m'
+    green = pre + '32m'
+    yellow = pre + '33m'
+    magenta = pre + '35m'
+    
+
 
 def generateField(size):
     field = []
@@ -31,34 +50,37 @@ field = generateField(int(input('field size: ')))
 last = None
 while True:
     if last or last == 0:
-        print(f'last  {" " * last + "v"}')
-    print(f'field {"".join(field)}')
+        print(f'last  {" " * last}{txt.negative}v{txt.end}')
+    print(f'field {txt.negative}{"".join(field)}{txt.end}')
         
     if all(f == '.' for f in field):
-        print('Victory!')
+        print(f'{txt.bold + txt.blink + txt.green + txt.white + txt.negative}Victory!{txt.end}')
         break
     else:
         if not getMoves(field):
-            print('Defeat!')
+            print(f'{txt.bold + txt.red + txt.white + txt.negative}Defeat!{txt.end}')
             break
         
-    print(f'moves {" ".join(getMoves(field))}')
-        
+    print(f'moves {txt.italic}{" ".join(getMoves(field))}{txt.end}')
+
     while True:
         i = input('> ')
         if not i or i == ' ' or not i in getMoves(field):
-            print(f'invalid move\navailable moves: {" ".join(getMoves(field))}')
+            print(f'{txt.yellow}invalid move{txt.end}')
+            move = False
         else:
-            break
+            move = True
+        break
         
-    i = int(i)
-    last = i
+    if move:
+        i = int(i)
+        last = i
 
-    field[i] = '.'
-    if i + 1 == len(field):
-        flip(field, i - 1)
-    elif i == 0:
-        flip(field, i + 1)
-    else:
-        flip(field, i - 1)
-        flip(field, i + 1)
+        field[i] = '.'
+        if i + 1 == len(field):
+            flip(field, i - 1)
+        elif i == 0:
+            flip(field, i + 1)
+        else:
+            flip(field, i - 1)
+            flip(field, i + 1)
